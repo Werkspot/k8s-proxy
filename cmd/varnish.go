@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
@@ -82,6 +83,13 @@ func (v *VarnishPurger) purge(url string) (err error) {
 		return
 	}
 	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+
+	log.Println(fmt.Sprintf("%s, status: %d, body: %s", url, resp.StatusCode, body))
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("purge failed for %s", url)
