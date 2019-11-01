@@ -1,10 +1,10 @@
 package main
 
 import (
+	"k8s-proxy/cmd"
 	"os"
-	"varnish-purger/cmd"
 )
 
 func main() {
-	os.Exit(cmd.NewVarnishPurgerCommand().Run())
+	os.Exit(cmd.NewProxyCommand().Run())
 }
