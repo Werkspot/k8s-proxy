@@ -1,14 +1,12 @@
 stages:
   - test
   - build
-  - maintenance
-
-image: golang:stretch
 
 variables:
   IMAGE_BASE_PATH: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG
 
 test:
+  image: golang:stretch
   stage: test
   only:
     - merge_requests
@@ -17,7 +15,7 @@ test:
     - make lint test
 
 build:
-  image: $CI_REGISTRY/infrastructure/docker-images/dind/master:latest
+  image: docker:latest
   stage: build
   only:
     - master
