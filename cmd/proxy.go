@@ -68,7 +68,9 @@ func (p *Proxy) Forward(request *http.Request) (err error) {
 	for range endpoints {
 		select {
 		case e := <-cErr:
-			errs = append(errs, e)
+			if e != nil {
+				errs = append(errs, e)
+			}
 		}
 	}
 
