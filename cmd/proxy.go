@@ -98,7 +98,7 @@ func (p *Proxy) request(request *http.Request, host string) (err error) {
 
 	req, err := http.NewRequest(
 		request.Method,
-		fmt.Sprintf("http://%s/%s", host, request.URL.RequestURI()),
+		fmt.Sprintf("http://%s%s", host, request.URL.RequestURI()),
 		request.Body,
 	)
 	if err != nil {
@@ -118,7 +118,7 @@ func (p *Proxy) request(request *http.Request, host string) (err error) {
 		return
 	}
 
-	log.Println(fmt.Sprintf("%s, status: %d, body: %s", request.URL.String(), resp.StatusCode, body))
+	log.Println(fmt.Sprintf("%s, status: %d, body: %s", req.URL.String(), resp.StatusCode, body))
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("expecting %d, found: %d", http.StatusOK, resp.StatusCode)
